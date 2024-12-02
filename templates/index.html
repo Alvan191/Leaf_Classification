@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deteksi Daun</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        /* Inline CSS for image size */
+        #image-preview {
+            max-width: 200px; /* Limit the width */
+            max-height: 200px; /* Limit the height */
+            display: none;
+            object-fit: contain; /* Ensure the image maintains its aspect ratio */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">Leaf Classification</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#">Deteksi</a></li>
+                    <li><a href="#">Dokumentasi</a></li>
+                    <li><a href="#">Tentang</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <h2>Deteksi Jenis Daun</h2>
+            <p>Agar sistem dapat mendeteksi jenis daun pada tanaman Anda, silakan unggah gambar daun yang ingin diidentifikasi.</p>
+            
+            <!-- Integrated Form -->
+            <form action="/" method="post" enctype="multipart/form-data" class="upload-box">
+                <label for="file-upload" class="file-label">Unggah gambar daun:</label>
+                <input type="file" name="leaf_image" id="file-upload" class="file-input" accept="image/*" required onchange="previewImage(event)">
+                <button type="submit">Classify</button>
+            </form>
+
+            <!-- Image Preview -->
+            <div id="image-preview-container">
+                <h3>Preview:</h3>
+                <img id="image-preview" src="#" alt="Image Preview">
+            </div>
+
+            {% if prediction %}
+                <h2>Prediction: {{ prediction }}</h2>
+            {% endif %}
+        </main>
+        <footer>
+            <p>Team Hangseng.</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript for Image Preview -->
+    <script>
+        function previewImage(event) {
+            const imagePreview = document.getElementById('image-preview');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>
